@@ -67,34 +67,34 @@ const UserSchema = new mongoose.Schema({
       type: String,
       default: ''
     },
-    currentWorkoutRoutine: {
+    currentWorkoutRoutine: [{
       type: String,
       default: ''
-    },
-    dietaryRestrictions: {
+    }],
+    dietaryRestrictions: [{
       type: String,
       default: ''
-    },
-    medicalConditions: {
+    }],
+    medicalConditions: [{
       type: String,
       default: ''
-    },
-    preferredWorkoutTime: {
+    }],
+    preferredWorkoutTime: [{
       type: String,
       default: ''
-    },
-    workoutFrequency: {
+    }],
+    workoutFrequency: [{
       type: String,
       default: ''
-    },
-    previousInjuries: {
+    }],
+    previousInjuries: [{
       type: String,
       default: ''
-    },
-    currentFitnessLevel: {
+    }],
+    currentFitnessLevel: [{
       type: String,
       default: ''
-    }
+    }]
   },
   code: {
     type: Number

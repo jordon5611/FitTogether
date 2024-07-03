@@ -75,7 +75,6 @@ const setNewPassword = async (req, res)=>{
     user.password = password
 
     await user.save()
-    
 
     const token = user.createToken()
 
@@ -84,8 +83,5 @@ const setNewPassword = async (req, res)=>{
     res.send({status:'success', data})
 
 }
-
-
-
 
 module.exports = { sendOptToEmail, checkOTP, setNewPassword } 
