@@ -63,10 +63,10 @@ const UserSchema = new mongoose.Schema({
     ref: 'Subscription'
   },
   signupQuestions: {
-    fitnessGoals: {
+    fitnessGoals: [{
       type: String,
       default: ''
-    },
+    }],
     currentWorkoutRoutine: [{
       type: String,
       default: ''

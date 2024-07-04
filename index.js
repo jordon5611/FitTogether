@@ -9,14 +9,14 @@ require('express-async-errors');
 // create express app
 const app = express();
 
-// const corsOptions = {
-//   origin: ["https://uhcstock.com", "http://192.168.100.5:3000", "https://admin.uhcstock.com", "http://localhost:3000", "http://localhost:3001"],
-//   optionsSuccessStatus: 200,
-// };
+const corsOptions = {
+  origin: ["http://localhost:3000", "http://localhost:3001"],
+  optionsSuccessStatus: 200,
+};
 
-//app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
-//app.options('*', cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // Increase request size limit to 5MB
 app.use(bodyParser.json({ limit: '25mb' }));
@@ -37,7 +37,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //Routes
 const AuthRoutes = require('./routes/auth');
-// const ProductRoutes = require('./routes/product');
+const ExerciseDietRoutes = require('./routes/exerciseDiet');
 // const ChatRoutes = require('./routes/chat')
 // const MessageRoutes = require('./routes/message')
 // const AdminRoutes = require('./routes/admin')
@@ -48,6 +48,9 @@ const AuthRoutes = require('./routes/auth');
 app.use(express.json());
 
 app.use('/user', AuthRoutes)
+
+app.use('/exerciseDiet', ExerciseDietRoutes)
+
 
 // app.use('/api/product', ProductRoutes)
 
@@ -66,8 +69,12 @@ app.use('/user', AuthRoutes)
 app.get('/', (req, res) => {
     res.send('Hey Got you')
 })
-//MiddleWare
 
+// Schedule weekly plans
+const scheduleWeeklyPlans = require('./scheduler/ScheduleWeeklyPlan');
+scheduleWeeklyPlans();
+
+//Middleware
 //error handler
 
 const notFoundMiddleware = require('./middleware/not-found');

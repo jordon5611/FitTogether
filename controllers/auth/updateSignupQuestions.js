@@ -1,5 +1,6 @@
 const User = require('../../models/User');
 const { NotFoundError } = require("../../errors");
+const { updateWeeklyPlans } = require('../exercise&Diet/fetchAndSaveExercise&DietPlans');
 
 const updateSignupQuestions = async (req, res) => {
     const { userId } = req.user; // Assuming user ID is available in req.user
@@ -29,6 +30,8 @@ const updateSignupQuestions = async (req, res) => {
     user.signupQuestions.workoutFrequency = workoutFrequency || user.signupQuestions.workoutFrequency;
     user.signupQuestions.previousInjuries = previousInjuries || user.signupQuestions.previousInjuries;
     user.signupQuestions.currentFitnessLevel = currentFitnessLevel || user.signupQuestions.currentFitnessLevel;
+
+    await updateWeeklyPlans(userId);
 
     await user.save();
 

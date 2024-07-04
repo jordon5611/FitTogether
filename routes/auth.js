@@ -38,7 +38,7 @@ router.post('/signup',
   ], validatorMiddleware,
   signup)
 
-router.get('/getSignupQuestions', Authentication, getSignupQuestions)
+router.get('/getSignupQuestions', getSignupQuestions)
 
 router.patch('/updateInformation', Authentication,
   [
@@ -85,7 +85,7 @@ router.get('/getUser/:userId', Authentication, [
 
 router.patch('/updateSignupQuestions', Authentication,
   [
-    body('fitnessGoals').not().notEmpty().isString().withMessage('Invalid fitness goals'),
+    //body('fitnessGoals').not().notEmpty().isString().withMessage('Invalid fitness goals'),
     body('currentWorkoutRoutine').not().notEmpty().isString().withMessage('Invalid current workout routine'),
     body('dietaryRestrictions').not().notEmpty().isString().withMessage('Invalid dietary restrictions'),
     body('medicalConditions').not().notEmpty().isString().withMessage('Invalid medical conditions'),
