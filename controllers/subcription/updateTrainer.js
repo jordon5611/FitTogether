@@ -17,15 +17,16 @@ const updateTrainer = async (req, res) => {
         throw new NotFoundError('Subscription not found, First buy subscription');
     }
 
-    if (!subscription.trainerId) {  
-        throw new BadRequestError('Trainer already added, Wait for Subscription Expiry');
-    }
 
     // save trainer in user and user in trainer
 
     const user = await User.findById(userId);
     if (!user) {
         throw new NotFoundError('User not found');
+    }
+
+    if(user.trainer){
+        throw new BadRequestError('Already have a trainer')
     }
 
     const trainer = await User.findById(trainerId);

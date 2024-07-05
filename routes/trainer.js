@@ -127,7 +127,7 @@ router.get('/getAllTrainer', Authentication, async (req, res) => {
 
     const trainers = await User.find({ userType: 'trainer', _id: { $ne: user.trainer } });
 
-    res.status(200).json({ status: 'success', message: 'Trainers fetched successfully', trainers });
+    res.status(200).json({ status: 'success', trainers });
 });
 
 module.exports = router;
