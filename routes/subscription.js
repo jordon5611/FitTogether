@@ -15,7 +15,7 @@ const { createSubscription } = require('../controllers/subcription/createSubscri
 const { updateTrainer } = require('../controllers/subcription/updateTrainer')
 const { getSubscription } = require('../controllers/subcription/getSubscription')
 
-router.post('/createSubscription' , createSubscription);
+router.post('/createSubscription', Authentication , createSubscription);
 router.post('/updateTrainer', Authentication , updateTrainer);
 router.get('/getSubscription', Authentication , getSubscription);
 

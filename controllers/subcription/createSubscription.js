@@ -10,7 +10,7 @@ const createSubscription = async (req, res) => {
 
     const charge = await stripe.charges.create({
         source: token,
-        amount: amount, // amount in cents
+        amount: amount * 100, // amount in cents
         currency: 'usd',
         description: 'Payment for Subscription',
     });
@@ -39,7 +39,7 @@ const createSubscription = async (req, res) => {
 
     const savedSubscription = await newSubscription.save();
 
-    res.status(201).json({ status: 'success',subscription: savedSubscription, message: 'Subscription created successfully' });
+    res.status(201).json({ status: 'success', subscription: savedSubscription, payment, message: 'Subscription created successfully' });
 
 };
 
