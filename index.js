@@ -39,10 +39,10 @@ const io = require("socket.io")(http);
 //Routes
 const AuthRoutes = require('./routes/auth');
 const ExerciseDietRoutes = require('./routes/exerciseDiet');
-// const ChatRoutes = require('./routes/chat')
-// const MessageRoutes = require('./routes/message')
-// const AdminRoutes = require('./routes/admin')
-// const OrderRoutes = require('./routes/order')
+const ChatRoutes = require('./routes/chat')
+const MessageRoutes = require('./routes/message')
+const AdminRoutes = require('./routes/admin')
+const TrainerRoutes = require('./routes/trainer')
 const VideoRoutes = require('./routes/video')
 const SubscriptionRoutes = require('./routes/subscription')
 
@@ -52,18 +52,17 @@ app.use('/user', AuthRoutes)
 
 app.use('/exerciseDiet', ExerciseDietRoutes)
 
-
 app.use('/subscription', SubscriptionRoutes)
 
 app.use('/video', VideoRoutes)
 
-// app.use('/api/chat', ChatRoutes)
+app.use('/chat', ChatRoutes)
 
-// app.use('/api/message', MessageRoutes)
+app.use('/message', MessageRoutes)
 
-// app.use('/api/admin', AdminRoutes)
+app.use('/admin', AdminRoutes)
 
-// app.use('/api/order', OrderRoutes)
+app.use('/trainer', TrainerRoutes)
 
 // app.use('/api/payment', PaymentRoutes)
 
