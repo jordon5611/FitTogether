@@ -7,7 +7,8 @@ const VideoSchema = new mongoose.Schema({
     videoUrl: { type: String, required: true },
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    verified: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Video', VideoSchema);

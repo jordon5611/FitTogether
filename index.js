@@ -74,7 +74,8 @@ app.get('/', (req, res) => {
 })
 
 // Schedule weekly plans
-const scheduleWeeklyPlans = require('./scheduler/ScheduleWeeklyPlan');
+const {scheduleWeeklyPlans, scheduleExpiredSubscriptionsCleanup} = require('./scheduler/ScheduleWeeklyPlan');
+scheduleExpiredSubscriptionsCleanup();
 scheduleWeeklyPlans();
 
 //Middleware

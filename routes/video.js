@@ -4,7 +4,7 @@ const router = express.Router();
 const Video = require('../models/Video'); // Configure this to use cloud storage like AWS S3
 const Comment = require('../models/Comment');
 const User = require('../models/User');
-const { NotFoundError } = require('../../errors');
+const { NotFoundError } = require('../errors');
 
 //Middlewares
 
@@ -22,7 +22,7 @@ router.post('/uploadVideo', Authentication ,async (req, res) => {
         throw new NotFoundError('User not found');
     }
 
-    const video = new Video({ title, user: userId, videoUrl });
+    const video = new Video({ title, userId: userId, videoUrl });
 
     await video.save();
     res.status(201).json({status: 'success', video, message: 'Video uploaded successfully'});
@@ -43,6 +43,10 @@ router.post('/likeVideo/:id', Authentication ,async (req, res) => {
 
     if (!user) {
         throw new NotFoundError('User not found');
+    }
+
+    if(user.userType === 'trainer') {
+        video.verified = true;
     }
 
     video.likes.push(user._id);
@@ -78,7 +82,15 @@ router.post('/unLikeVideo/:id', Authentication ,async (req, res) => {
 
 // Get Videos
 router.get('/getVideos', Authentication , async (req, res) => {
-    const videos = await Video.find().populate('user').populate('comments');
+    const videos = await Video.find()
+            .populate('userId') 
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'userId' 
+                }
+            });
+
     res.json({status: 'success', videos});
 });
 

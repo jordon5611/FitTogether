@@ -28,7 +28,8 @@ const SubscriptionSchema = new mongoose.Schema({
       required: true
     },
     paymentId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Payment',
       required: true
     }
   }, { timestamps: true });

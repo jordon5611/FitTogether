@@ -5,7 +5,6 @@ const { body, param } = require('express-validator');
 
 const validatorMiddleware = require('../middleware/Validator-MiddleWare');
 const Authentication = require('../middleware/authentication')
-const upload = require('../middleware/multer');
 
 //Router
 const router = express.Router()
@@ -97,6 +96,6 @@ router.patch('/updateSignupQuestions', Authentication,
 //   ], validatorMiddleware,
   updateSignupQuestions);
 
-router.post('/setProfileImage', Authentication, upload.single("profileImage"), setProfileImage)
+router.post('/setProfileImage', Authentication,  setProfileImage)
 
 module.exports = router

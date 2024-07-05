@@ -29,10 +29,36 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   certificate:{
-    type: String
+    doc: {
+      type: String
+    },
+    status: {
+      type: String,
+      enum: ['Pending', 'Approved', 'Rejected'],
+      default: 'Pending'
+    }
   },
+  clients:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   goals: {
     type: String
+  },
+  bankDetails: {
+    bankName: {
+      type: String
+    },
+    accountNumber: {
+      type: String
+    },
+    accountHolderName: {
+      type: String
+    }
+  },
+  balance: {
+    type: Number,
+    default: 0
   },
   preferences: {
     type: String
@@ -45,6 +71,10 @@ const UserSchema = new mongoose.Schema({
   },
   profilePicture: {
     type: String
+  },
+  trainer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   bio: {
     type: String
