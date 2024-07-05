@@ -1,74 +1,55 @@
 const axios = require('axios');
 const DietPlan = require('../../models/DietPlan');
 const ExercisePlan = require('../../models/ExercisePlan');
+const { createMealPlan } = require('./createMealPlan');
+require("dotenv").config();
 
-const fetchAndSaveDietPlans = async (userId) => {
 
-  // Fetch diet plan from external API (this is just a placeholder)
-  const response = await axios.get('https://trackapi.nutritionix.com/v2/search/instant', {
-    headers: {
-      'x-app-id': process.env.NUTRITIONIX_APP_ID,
-      'x-app-key': process.env.NUTRITIONIX_APP_KEY
-    },
-    params: {
-      query: 'meal'
-    }
-  });
-
-  const dietPlan = {
-    userId,
-    name: 'Weekly Diet Plan',
-    description: 'A balanced diet plan for the week.',
-    weekPlan: [
-      { day: 'Monday', meals: ['Meal 1', 'Meal 2', 'Meal 3'] },
-      { day: 'Tuesday', meals: ['Meal 1', 'Meal 2', 'Meal 3'] },
-      { day: 'Wednesday', meals: ['Meal 1', 'Meal 2', 'Meal 3'] },
-      { day: 'Thursday', meals: ['Meal 1', 'Meal 2', 'Meal 3'] },
-      { day: 'Friday', meals: ['Meal 1', 'Meal 2', 'Meal 3'] },
-      { day: 'Saturday', meals: ['Meal 1', 'Meal 2', 'Meal 3'] },
-      { day: 'Sunday', meals: ['Meal 1', 'Meal 2', 'Meal 3'] },
-    ],
-    dietaryRestrictions: []
-  };
-
-  await DietPlan.create(dietPlan);
-  console.log('Diet plan saved');
-
-};
 
 const fetchAndSaveExercisePlans = async (userId) => {
+  try {
+    const response = await axios.get('https://wger.de/api/v2/exercise/', {
+      params: {
+        language: 2,
+        status: 2
+      }
+    });
 
-  // Fetch exercise plan from external API (this is just a placeholder)
-  const response = await axios.get('https://wger.de/api/v2/exercise/', {
-    params: {
-      language: 2,
-      status: 2
+    const exercises = response.data.results.map(result => result.name);
+    console.log('Exercises:', exercises);
+
+    const exercisePlan = {
+      userId,
+      name: 'Weekly Exercise Plan',
+      description: 'A comprehensive exercise plan for the week.',
+      weekPlan: [
+        { day: 'Monday', exercises },
+        { day: 'Tuesday', exercises },
+        { day: 'Wednesday', exercises },
+        { day: 'Thursday', exercises },
+        { day: 'Friday', exercises },
+        { day: 'Saturday', exercises },
+        { day: 'Sunday', exercises }
+      ],
+      fitnessLevel: 'Intermediate'
+    };
+
+    let savedExercisePlan = await ExercisePlan.findOne({ userId });
+    if (!savedExercisePlan) {
+      savedExercisePlan = await ExercisePlan.create(exercisePlan);
+    } else {
+      savedExercisePlan.weekPlan = exercisePlan.weekPlan;
+      await savedExercisePlan.save();
     }
-  });
 
-  const exercisePlan = {
-    userId,
-    name: 'Weekly Exercise Plan',
-    description: 'A comprehensive exercise plan for the week.',
-    weekPlan: [
-      { day: 'Monday', exercises: ['Exercise 1', 'Exercise 2', 'Exercise 3'] },
-      { day: 'Tuesday', exercises: ['Exercise 1', 'Exercise 2', 'Exercise 3'] },
-      { day: 'Wednesday', exercises: ['Exercise 1', 'Exercise 2', 'Exercise 3'] },
-      { day: 'Thursday', exercises: ['Exercise 1', 'Exercise 2', 'Exercise 3'] },
-      { day: 'Friday', exercises: ['Exercise 1', 'Exercise 2', 'Exercise 3'] },
-      { day: 'Saturday', exercises: ['Exercise 1', 'Exercise 2', 'Exercise 3'] },
-      { day: 'Sunday', exercises: ['Exercise 1', 'Exercise 2', 'Exercise 3'] },
-    ],
-    fitnessLevel: 'Intermediate'
-  };
-
-  await ExercisePlan.create(exercisePlan);
-  console.log('Exercise plan saved');
-
+    console.log('Exercise plan saved');
+  } catch (error) {
+    console.error('Error fetching exercise plans:', error.response ? error.response.data : error.message);
+  }
 };
 
 const updateWeeklyPlans = async (userId) => {
-  await fetchAndSaveDietPlans(userId);
+  await createMealPlan(userId);
   await fetchAndSaveExercisePlans(userId);
   console.log('Weekly plans updated');
 };

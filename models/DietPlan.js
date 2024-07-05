@@ -1,29 +1,42 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const DietPlanSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    meals: [
-        {
-            type: String,
-            required: true
-        }
-    ],
-    dietaryRestrictions: {
-        type: [String],
-        default: []
-    }
-}, { timestamps: true });
+const MealSchema = new Schema({
+  day: {
+    type: String,
+    required: true
+  },
+  meals: {
+    type: [String],
+    required: true
+  }
+});
 
-module.exports = mongoose.model('DietPlan', DietPlanSchema);
+const DietPlanSchema = new Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  weekPlan: {
+    type: [MealSchema],
+    required: true
+  },
+  dietaryRestrictions: {
+    type: [String],
+    default: []
+  }
+}, {
+  timestamps: true
+});
+
+const DietPlan = mongoose.model('DietPlan', DietPlanSchema);
+module.exports = DietPlan;

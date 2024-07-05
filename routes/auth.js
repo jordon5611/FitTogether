@@ -84,16 +84,16 @@ router.get('/getUser/:userId', Authentication, [
 ,getUser)
 
 router.patch('/updateSignupQuestions', Authentication,
-  [
-    //body('fitnessGoals').not().notEmpty().isString().withMessage('Invalid fitness goals'),
-    body('currentWorkoutRoutine').not().notEmpty().isString().withMessage('Invalid current workout routine'),
-    body('dietaryRestrictions').not().notEmpty().isString().withMessage('Invalid dietary restrictions'),
-    body('medicalConditions').not().notEmpty().isString().withMessage('Invalid medical conditions'),
-    body('preferredWorkoutTime').not().notEmpty().isString().withMessage('Invalid preferred workout time'),
-    body('workoutFrequency').not().notEmpty().isString().withMessage('Invalid workout frequency'),
-    body('previousInjuries').not().notEmpty().isString().withMessage('Invalid previous injuries'),
-    body('currentFitnessLevel').not().notEmpty().isString().withMessage('Invalid current fitness level')
-  ], validatorMiddleware,
+//   [
+//     //body('fitnessGoals').not().notEmpty().isString().withMessage('Invalid fitness goals'),
+//     //body('currentWorkoutRoutine').not().notEmpty().isString().withMessage('Invalid current workout routine'),
+//     //body('dietaryRestrictions').not().notEmpty().isString().withMessage('Invalid dietary restrictions'),
+//     //body('medicalConditions').not().notEmpty().isString().withMessage('Invalid medical conditions'),
+//     //body('preferredWorkoutTime').not().notEmpty().isString().withMessage('Invalid preferred workout time'),
+//     //body('workoutFrequency').not().notEmpty().isString().withMessage('Invalid workout frequency'),
+//     //body('previousInjuries').not().notEmpty().isString().withMessage('Invalid previous injuries'),
+//     //body('currentFitnessLevel').not().notEmpty().isString().withMessage('Invalid current fitness level')
+//   ], validatorMiddleware,
   updateSignupQuestions);
 
 // router.post('/setProfileImage', Authentication, upload.single("profileImage"), setProfileImage)

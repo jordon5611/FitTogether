@@ -9,14 +9,14 @@ const getDailyPlans = async (req, res) => {
   const dietPlan = await DietPlan.findOne({ userId });
   const exercisePlan = await ExercisePlan.findOne({ userId });
 
-  //const dailyDietPlan = dietPlan.weekPlan.find(plan => plan.day === dayOfWeek);
-  //const dailyExercisePlan = exercisePlan.weekPlan.find(plan => plan.day === dayOfWeek);
+  const dailyDietPlan = dietPlan ? dietPlan.weekPlan.find(plan => plan.day === dayOfWeek) : null;
+  const dailyExercisePlan = exercisePlan ? exercisePlan.weekPlan.find(plan => plan.day === dayOfWeek) : null;
 
   res.status(200).json({
     status: 'success',
     data: {
-      dietPlan,
-      exercisePlan
+      dietPlan: dailyDietPlan,
+      exercisePlan: dailyExercisePlan
     }
   });
 };

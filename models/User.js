@@ -28,6 +28,9 @@ const UserSchema = new mongoose.Schema({
     default: 'user',
     required: true
   },
+  certificate:{
+    type: String
+  },
   goals: {
     type: String
   },
@@ -45,22 +48,6 @@ const UserSchema = new mongoose.Schema({
   },
   bio: {
     type: String
-  },
-  coachingServices: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'CoachingService'
-  }],
-  fitnessPlans: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'FitnessPlan'
-  }],
-  progress: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Progress'
-  }],
-  subscription: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Subscription'
   },
   signupQuestions: {
     fitnessGoals: [{
