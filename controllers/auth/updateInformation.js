@@ -14,7 +14,7 @@ const updateInformation = async(req,res)=>{
         throw new NotFoundError('User not Found!')
     }
 
-    const fieldsToUpdate = ['fname', 'lname', 'email', 'bio', 'preferences', 'goals', 'healthStatus', 'fitnessLevel'];
+    const fieldsToUpdate = ['fname', 'lname', 'email', 'bio', 'preferences', 'goals', 'healthStatus', 'fitnessLevel', 'location'];
     fieldsToUpdate.forEach(field => {
         if (req.body[field]) {
             user[field] = req.body[field];
@@ -23,7 +23,7 @@ const updateInformation = async(req,res)=>{
 
     await user.save()
 
-    res.send({status:'success', user})
+    res.send({status:'success', user, message: 'Updated successfully'})
 }
 
 

@@ -49,6 +49,9 @@ const UserSchema = new mongoose.Schema({
   bio: {
     type: String
   },
+  location: {
+    type: String
+  },
   signupQuestions: {
     fitnessGoals: [{
       type: String,

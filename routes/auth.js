@@ -50,6 +50,7 @@ router.patch('/updateInformation', Authentication,
       body('goals').optional().isString().withMessage('Invalid goals'),
       body('healthStatus').optional().isString().withMessage('Invalid health status'),
       body('fitnessLevel').optional().isString().withMessage('Invalid fitness level'),
+      body('location').optional().isString().withMessage('Invalid Location'),
    ],validatorMiddleware, 
   updateInformation)
 

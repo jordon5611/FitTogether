@@ -13,7 +13,7 @@ const signup = async (req, res) => {
 
     const data = {...newUser.toObject(),token}
 
-    res.status(StatusCodes.CREATED).json({ status: 'success', data })
+    res.status(StatusCodes.CREATED).json({ status: 'success', data, message: 'Account created successfully' })
 }
 
 

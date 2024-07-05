@@ -43,7 +43,7 @@ const ExerciseDietRoutes = require('./routes/exerciseDiet');
 // const AdminRoutes = require('./routes/admin')
 // const OrderRoutes = require('./routes/order')
 // const PaymentRoutes = require('./routes/payment')
-// const SystemSettingRoutes = require('./routes/systemSetting')
+const SubscriptionRoutes = require('./routes/subscription')
 
 app.use(express.json());
 
@@ -52,7 +52,7 @@ app.use('/user', AuthRoutes)
 app.use('/exerciseDiet', ExerciseDietRoutes)
 
 
-// app.use('/api/product', ProductRoutes)
+app.use('/subscription', SubscriptionRoutes)
 
 // app.use('/api/chat', ChatRoutes)
 
@@ -67,7 +67,7 @@ app.use('/exerciseDiet', ExerciseDietRoutes)
 // app.use('/api/systemSetting', SystemSettingRoutes)
 
 app.get('/', (req, res) => {
-    res.send('Hey Got you')
+  res.send('Hey Got you')
 })
 
 // Schedule weekly plans
@@ -87,6 +87,6 @@ app.use(errorhandlerFunc);
 const port = process.env.PORT || 4001;
 
 app.listen(port, async () => {
-    await DB(process.env.MONGO_URI);
-    console.log(`Server is listening on port ${port}`);
+  await DB(process.env.MONGO_URI);
+  console.log(`Server is listening on port ${port}`);
 });
