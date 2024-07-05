@@ -29,9 +29,10 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
-//SocketIO
-// const http = require("http").Server(app);
-// const io = require("socket.io")(http);
+//Socket IO
+
+const http = require("http").Server(app);
+const io = require("socket.io")(http);
 
 
 
@@ -92,3 +93,57 @@ app.listen(port, async () => {
   await DB(process.env.MONGO_URI);
   console.log(`Server is listening on port ${port}`);
 });
+
+
+
+let activeUsers = []
+
+io.on("connection", (socket)=>{
+    socket.on('new-user-add', (newUserId)=>{
+        
+        if(!activeUsers.some((user)=> user.userId === newUserId)){
+            
+            activeUsers.push({
+                userId: newUserId,
+                socketId: socket.id
+            })
+        }
+
+        console.log('connected Users', activeUsers);
+        io.emit('get-users', activeUsers)
+    })
+
+    //sendMessage
+    socket.on('send-message', (data)=>{
+        const {receiverId} = data
+        const user = activeUsers.find((user)=> user.userId === receiverId)
+        console.log('send message from socket to', receiverId);
+
+        if(user){
+            io.to(user.socketId).emit('receive-message', data)
+        }
+    })
+
+    socket.on('disconnect', ()=>{
+        activeUsers = activeUsers.filter((user)=> user.socketId !== socket.id)
+        console.log('User Disconnected', activeUsers);
+        io.emit('get-users', activeUsers)
+    })
+
+    socket.on("typing", (data) => {
+        const { senderId, chatId, isTyping, receiverId } = data;
+        const user = activeUsers.find((user) => user.userId === receiverId);
+    
+        if (user) {
+          io.to(user.socketId).emit("user-typing", { senderId, chatId, isTyping });
+        }
+    });
+
+})
+
+io.listen(8000, {
+    cors: {
+        origin: "*",
+    },
+});
+
