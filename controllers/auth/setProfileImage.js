@@ -1,7 +1,6 @@
 const User = require('../../models/User');
 const { NotFoundError, BadRequestError } = require('../../errors');
 
-const multer = require('multer');
 
 
 const setProfileImage = async (req, res) => {
@@ -15,7 +14,7 @@ const setProfileImage = async (req, res) => {
     }
 
 
-    user.profileImage = profileImageUrl;
+    user.profilePicture = profileImageUrl;
 
     await user.save();
 
