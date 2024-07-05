@@ -19,7 +19,7 @@ const { updateInformation } = require('../controllers/auth/updateInformation')
 const { changePassword } = require('../controllers/auth/changePassword')
 const { sendOptToEmail, checkOTP, setNewPassword } = require('../controllers/auth/forgetPassword')
 const { getUser } = require('../controllers/auth/getUser')
-//const { setProfileImage } = require('../controllers/auth/setProfileImage')
+const { setProfileImage } = require('../controllers/auth/setProfileImage')
 
 router.post('/login',
   [
