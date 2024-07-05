@@ -42,7 +42,7 @@ const ExerciseDietRoutes = require('./routes/exerciseDiet');
 // const MessageRoutes = require('./routes/message')
 // const AdminRoutes = require('./routes/admin')
 // const OrderRoutes = require('./routes/order')
-// const PaymentRoutes = require('./routes/payment')
+const VideoRoutes = require('./routes/video')
 const SubscriptionRoutes = require('./routes/subscription')
 
 app.use(express.json());
@@ -53,6 +53,8 @@ app.use('/exerciseDiet', ExerciseDietRoutes)
 
 
 app.use('/subscription', SubscriptionRoutes)
+
+app.use('/video', VideoRoutes)
 
 // app.use('/api/chat', ChatRoutes)
 

@@ -1,5 +1,4 @@
 const Subscription = require('../../models/Subscription'); // Adjust the path as necessary
-
 const Payment = require('../../models/Payment')
 const stripe = require('../../HelpingFunctions/stripe')
 
