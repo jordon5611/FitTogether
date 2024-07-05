@@ -97,6 +97,6 @@ router.patch('/updateSignupQuestions', Authentication,
 //   ], validatorMiddleware,
   updateSignupQuestions);
 
-// router.post('/setProfileImage', Authentication, upload.single("profileImage"), setProfileImage)
+router.post('/setProfileImage', Authentication, upload.single("profileImage"), setProfileImage)
 
 module.exports = router
