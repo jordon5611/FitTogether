@@ -13,8 +13,10 @@ const router = express.Router()
 //Controllers
 const { createSubscription } = require('../controllers/subcription/createSubscription')
 const { updateTrainer } = require('../controllers/subcription/updateTrainer')
+const { getSubscription } = require('../controllers/subcription/getSubscription')
 
 router.post('/createSubscription', Authentication , createSubscription);
 router.post('/updateTrainer', Authentication , updateTrainer);
+router.get('/getSubscription', Authentication , getSubscription);
 
 module.exports = router
