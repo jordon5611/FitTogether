@@ -91,6 +91,16 @@ router.get('/getVideos', Authentication, async (req, res) => {
             }
         });
 
+        for (const video of videos) {
+            for (const commentId of video.comments) {
+                const comment = await Comment.findById(commentId);
+                const user = await User.findById(comment.userId);
+    
+                // Add users with data to the comment
+                comment.usersWithData = user;
+            }
+        }
+
     res.json({ status: 'success', videos });
 });
 
