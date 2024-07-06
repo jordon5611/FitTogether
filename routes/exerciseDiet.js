@@ -12,7 +12,10 @@ const router = express.Router()
 
 //Controllers
 const { getDailyPlans } = require('../controllers/exercise&Diet/getDailyPlans')
+const { getDay } = require('../controllers/exercise&Diet/getDay')
 
 router.get('/getDailyPlans', Authentication , getDailyPlans)
+
+router.get('/getDay', Authentication , getDay)
 
 module.exports = router
