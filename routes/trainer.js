@@ -85,7 +85,18 @@ router.get('/getClients', Authentication, async (req, res) => {
         throw new NotFoundError('User not found');
     }
     const clients = await User.find({ trainer: user._id });
-    res.status(200).json({ status: 'success', clients });
+
+
+    // Fetch subscription end dates for each client
+    const clientsWithSubscriptions = await Promise.all(clients.map(async (client) => {
+        const subscription = await Subscription.findOne({ userId: client._id }).sort({ endDate: -1 }); // Fetch the latest subscription
+        return {
+            ...client.toObject(),
+            subscriptionEndDate: subscription ? subscription.endDate : null
+        };
+    }));
+
+    res.status(200).json({ status: 'success', clientsWithSubscriptions });
 });
 
 //update trainer bankDetails
