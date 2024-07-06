@@ -4,34 +4,9 @@ const ExercisePlan = require('../../models/ExercisePlan');
 const { generateDietPlan } = require('./createMealPlan');
 require('dotenv').config();
 
-
 const fetchAndSaveExercisePlans = async (userId) => {
   try {
-    const response = await axios.get('https://wger.de/api/v2/exercise/', {
-      params: {
-        language: 2,
-        status: 3
-      }
-    });
-
-    const exercises = response.data.results;
-
-    const fetchExerciseImage = async (exerciseId) => {
-      const response = await axios.get(`https://wger.de/api/v2/exerciseimage/?exercise=${exerciseId}`);
-      const images = response.data.results;
-      return images.length > 0 ? images[0].image : 'https://via.placeholder.com/150'; // Use a placeholder image if no image is found
-    };
-
-    const exerciseData = await Promise.all(
-      exercises.map(async (exercise) => {
-        const image = await fetchExerciseImage(exercise.id);
-        return {
-          name: exercise.name,
-          image
-        };
-      })
-    );
-
+    // Function to shuffle exercises for variety
     const shuffleArray = (array) => {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -40,11 +15,13 @@ const fetchAndSaveExercisePlans = async (userId) => {
       return array;
     };
 
+    // Generate varied exercise plans for each day
     const generateDailyExercises = (exerciseData, numExercises) => {
       const shuffledExercises = shuffleArray([...exerciseData]);
       return shuffledExercises.slice(0, numExercises);
     };
 
+    // Construct the weekly exercise plan
     const exercisePlan = {
       userId,
       name: 'Weekly Exercise Plan',
@@ -61,6 +38,7 @@ const fetchAndSaveExercisePlans = async (userId) => {
       fitnessLevel: 'Intermediate'
     };
 
+    // Save the exercise plan to the database
     let savedExercisePlan = await ExercisePlan.findOne({ userId });
     if (!savedExercisePlan) {
       savedExercisePlan = await ExercisePlan.create(exercisePlan);
@@ -75,13 +53,29 @@ const fetchAndSaveExercisePlans = async (userId) => {
   }
 };
 
-module.exports = { fetchAndSaveExercisePlans };
-
 
 const updateWeeklyPlans = async (userId) => {
   await generateDietPlan(userId);
   await fetchAndSaveExercisePlans(userId);
   console.log('Weekly plans updated');
 };
+
+
+
+const exerciseData = [
+  { name: '2 Handed Kettlebell Swing', image: 'https://firebasestorage.googleapis.com/v0/b/fittogether-5bb9a.appspot.com/o/recorded-videos%2Ffire-1.jpeg?alt=media&token=2883fdc6-c5a4-4290-a1fd-3b137e822d55' },
+  { name: '3D lunge warmup', image: 'https://firebasestorage.googleapis.com/v0/b/fittogether-5bb9a.appspot.com/o/recorded-videos%2Ffire-2.jpeg?alt=media&token=72a91ba7-e098-4938-b23b-9e0a9b83c273' },
+  { name: '4-count burpees', image: 'https://firebasestorage.googleapis.com/v0/b/fittogether-5bb9a.appspot.com/o/recorded-videos%2Ffire-3.jpeg?alt=media&token=1915cd3d-d125-4edf-acb2-9147ba017a5f' },
+  { name: 'Abdominal Stabilization', image: 'https://firebasestorage.googleapis.com/v0/b/fittogether-5bb9a.appspot.com/o/recorded-videos%2Ffire-4.jpeg?alt=media&token=fd507ca9-ec92-4f22-9ce1-5f61faccb7cc' },
+  { name: 'Abdominales sovieticas', image: 'https://firebasestorage.googleapis.com/v0/b/fittogether-5bb9a.appspot.com/o/recorded-videos%2Ffire-5.jpeg?alt=media&token=2ace0ccb-5542-4f40-81d6-abdf91673383' },
+  { name: 'Abduktion im Stand', image: 'https://firebasestorage.googleapis.com/v0/b/fittogether-5bb9a.appspot.com/o/recorded-videos%2Ffire-6.jpeg?alt=media&token=f6867016-c3de-4bcc-b36d-938687f1eb4c' },
+  { name: 'Adduktorenmaschine', image: 'https://firebasestorage.googleapis.com/v0/b/fittogether-5bb9a.appspot.com/o/recorded-videos%2Ffire-7.jpeg?alt=media&token=95cd1679-7c98-4ef1-8cfa-0237618a7966' },
+  { name: 'Alternate back lunges', image: 'https://firebasestorage.googleapis.com/v0/b/fittogether-5bb9a.appspot.com/o/recorded-videos%2Ffire-8.jpeg?alt=media&token=e0223f01-1d26-4211-ada5-9608def13703' },
+  { name: 'Alternating Biceps Curls With Dumbbell', image: 'https://firebasestorage.googleapis.com/v0/b/fittogether-5bb9a.appspot.com/o/recorded-videos%2Ffire-9.jpeg?alt=media&token=5d838744-58dc-4d92-b976-855824e696b5' },
+  { name: 'Arnold Shoulder Press', image: 'https://firebasestorage.googleapis.com/v0/b/fittogether-5bb9a.appspot.com/o/recorded-videos%2Ffire-10.jpeg?alt=media&token=7bfeae4c-cc64-4618-97d8-03bec63d0927' },
+];
+
+
+
 
 module.exports = { updateWeeklyPlans };

@@ -21,6 +21,10 @@ const DayPlanSchema = new Schema({
   calories: {
     type: Number,
     required: true
+  },
+  image: {
+    type: String,
+    required: false
   }
 });
 

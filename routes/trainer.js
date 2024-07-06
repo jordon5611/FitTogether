@@ -85,7 +85,7 @@ router.get('/getClients', Authentication, async (req, res) => {
         throw new NotFoundError('User not found');
     }
     const clients = await User.find({ trainer: user._id });
-    res.status(200).json({ status: 'success', message: 'Clients fetched successfully', clients });
+    res.status(200).json({ status: 'success', clients });
 });
 
 //update trainer bankDetails
@@ -129,5 +129,26 @@ router.get('/getAllTrainer', Authentication, async (req, res) => {
 
     res.status(200).json({ status: 'success', trainers });
 });
+
+//balance, users of trainer
+router.get('/getTrainerDashboard', Authentication, async (req, res) => {
+    const userId = req.user.userId
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new NotFoundError('User not found');
+    }
+
+    if (user.userType !== 'trainer') {
+        throw new BadRequestError('Only trainers can access this route');
+    }
+
+    //clients of trainers in number
+
+    const clients = await User.countdocuments({ trainer: user._id });
+
+    res.status(200).json({ status: 'success', balance: user.balance, users: clients });
+
+});
+
 
 module.exports = router;
