@@ -35,7 +35,7 @@ const updateSignupQuestions = async (req, res) => {
 
     await user.save();
 
-    res.status(200).json({ status: 'success', user , message: 'Updated successfully' });
+    res.status(200).json({ status: 'success', user });
 };
 
 module.exports = { updateSignupQuestions };

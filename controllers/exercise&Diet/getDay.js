@@ -19,7 +19,7 @@ const getDay = async (req, res) => {
     const diffInMs = currentDate - accountCreationDate;
 
     // Convert milliseconds to days
-    const days = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    let days = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
     days = days + 1;
 
 
