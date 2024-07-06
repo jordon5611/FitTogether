@@ -20,6 +20,7 @@ const getDay = async (req, res) => {
 
     // Convert milliseconds to days
     const days = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    days = days + 1;
 
 
     res.status(200).json({ status: 'success', days });
