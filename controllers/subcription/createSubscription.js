@@ -11,7 +11,7 @@ const createSubscription = async (req, res) => {
         source: token,
         amount: amount * 100, // amount in cents
         currency: 'usd',
-        description: 'Payment for Subscription',
+        description: 'Payment for Subscription for userId: ' + userId,
     });
 
     const payment = new Payment({
