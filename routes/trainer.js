@@ -156,7 +156,7 @@ router.get('/getTrainerDashboard', Authentication, async (req, res) => {
 
     //clients of trainers in number
 
-    const clients = await User.countdocuments({ trainer: user._id });
+    const clients = await User.countDocuments({ trainer: user._id });
 
     res.status(200).json({ status: 'success', balance: user.balance, users: clients });
 
