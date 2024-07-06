@@ -2,7 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const Chat = require('../models/Chat');
+
+const Subscription = require('../models/Subscription');
 const { NotFoundError, BadRequestError } = require('../errors');
 
 //Middlewares
