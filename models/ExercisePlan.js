@@ -2,12 +2,23 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ExerciseSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String,
+    required: false
+  }
+});
+
+const DayExerciseSchema = new Schema({
   day: {
     type: String,
     required: true
   },
   exercises: {
-    type: [String],
+    type: [ExerciseSchema],
     required: true
   }
 });
@@ -27,7 +38,7 @@ const ExercisePlanSchema = new Schema({
     required: true
   },
   weekPlan: {
-    type: [ExerciseSchema],
+    type: [DayExerciseSchema],
     required: true
   },
   fitnessLevel: {

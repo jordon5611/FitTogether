@@ -1,13 +1,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const MealSchema = new Schema({
+const DayPlanSchema = new Schema({
   day: {
     type: String,
     required: true
   },
-  meals: {
-    type: [String],
+  proteins: {
+    type: Number,
+    required: true
+  },
+  fats: {
+    type: Number,
+    required: true
+  },
+  carbohydrates: {
+    type: Number,
+    required: true
+  },
+  calories: {
+    type: Number,
     required: true
   }
 });
@@ -27,7 +39,7 @@ const DietPlanSchema = new Schema({
     required: true
   },
   weekPlan: {
-    type: [MealSchema],
+    type: [DayPlanSchema],
     required: true
   },
   dietaryRestrictions: {

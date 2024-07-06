@@ -104,6 +104,17 @@ router.get('/getVideos', Authentication, async (req, res) => {
     res.json({ status: 'success', videos });
 });
 
+//get video by user
+router.get('/getVideosByUser', Authentication, async (req, res) => {
+    const userId = req.user.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new NotFoundError('User not found');
+    }
+    const videos = await Video.find({ userId: userId }).populate('userId');
+    res.json({ status: 'success', videos });
+});
+
 // Comment on Video
 router.post('/commentOnVideo/:videoId', Authentication, async (req, res) => {
     const { text } = req.body;

@@ -17,7 +17,6 @@ const updateTrainer = async (req, res) => {
         throw new NotFoundError('Subscription not found, First buy subscription');
     }
 
-
     // save trainer in user and user in trainer
 
     const user = await User.findById(userId);
